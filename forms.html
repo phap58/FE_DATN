@@ -130,8 +130,12 @@
                                 <td>8GB</td>
                                 <td>256GB SSD</td>
                                 <td>With WAN</td>
-                                <td><button>Khắc phục</button></td>
+                                <td class="border px-4 py-2">
+                                        <a>
+                                                <i class="fas fa-desktop"></i></a>
+                                       </td>
                             </tr>
+
                             <tr class="highlight-row">
                                 <td>PC2</td>
                                 <td>192.168.1.11</td>
@@ -140,8 +144,10 @@
                                 <td>16GB</td>
                                 <td>256GB SSD</td>
                                 <td>Without WAN</td>
-                                <td><button>Khắc phục</button></td>
-                            </tr>
+ <td class="border px-4 py-2">
+                                        <a>
+                                                <i class="fas fa-desktop"></i></a>
+                                       </td>                            </tr>
                             <tr class="highlight-row">
                                 <td>PC3</td>
                                 <td>192.168.1.11</td>
@@ -150,8 +156,10 @@
                                 <td>64GB</td>
                                 <td>256GB SSD</td>
                                 <td>Without WAN</td>
-                                <td><button>Khắc phục</button></td>
-                            </tr>
+ <td class="border px-4 py-2">
+                                        <a>
+                                                <i class="fas fa-desktop"></i></a>
+                                       </td>                            </tr>
                             <tr class="highlight-row">
                                 <td>PC4</td>
                                 <td>192.168.1.11</td>
@@ -160,8 +168,11 @@
                                 <td>4GB</td>
                                 <td>256GB SSD</td>
                                 <td>Without WAN</td>
-                                <td><button>Khắc phục</button></td>
-                            </tr>
+ <td class="border px-4 py-2">
+                                        <a>
+                                                <i class="fas fa-desktop"></i></a>
+                                       </td>                            </tr>
+                         
                             <!-- Thêm dòng thông tin máy tính khác tương tự -->
                         </tbody>
                     </table>
@@ -225,8 +236,10 @@
 
 <script>
        const rows = document.querySelectorAll('.highlight-row');
+       let hoverTimeout;
     rows.forEach(row => {
         row.addEventListener('mouseover', () => {
+            hoverTimeout = setTimeout(() => {
             // Hiển thị thông tin chi tiết (ví dụ: alert hoặc hiển thị trong một phần tử khác)
             const machineName = row.querySelector('td:nth-child(1)').textContent;
             const os = row.querySelector('td:nth-child(3)').textContent;
@@ -235,9 +248,13 @@
             const disk = row.querySelector('td:nth-child(6)').textContent;
             const status = row.querySelector('td:nth-child(7)').textContent;
             alert(`Thông tin máy ${machineName}:\nHệ điều hành: ${os}\nCPU: ${cpu}\nRAM: ${ram}\nDisk: ${disk}\nTrạng thái: ${status}`);
-        });
+        }, 550);
     });
 
+    row.addEventListener('mouseout', () => {
+        clearTimeout(hoverTimeout);
+    });
+    });
        // Lấy dữ liệu từ bảng và tính toán phân phối OS
 const osData = {};
 const ramData = {};
@@ -316,6 +333,16 @@ const wanChart = new Chart(wanChartCtx, {
         maintainAspectRatio: false
     }
 });
+
+   // Cập nhật biểu tượng thao tác tùy theo trạng thái
+   document.querySelectorAll('#tableBody tr').forEach(row => {
+                                const statusCell = row.cells[6];
+                                const actionCell = row.cells[7];
+                                const status = statusCell.innerText;
+                                actionCell.innerHTML = status === 'With WAN' ?
+                                    `<a class="bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white"><i class="fas fa-desktop"></i></a>` :
+                                    `<a><i class="fas fa-desktop"></i></a>`;
+                            });
 </script>
 
 </body>
