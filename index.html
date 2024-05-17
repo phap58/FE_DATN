@@ -293,7 +293,53 @@
         updateTable();
     });
 </script>
+<script>
+    // Hàm ping từng địa chỉ IP từ API và xác định mạng WAN hoặc LAN
+    function checkNetwork(ipAddress) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.google.com', true);
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Mạng WAN
+                console.log(ipAddress + ' - WAN');
+                // Thực hiện các hành động phù hợp cho mạng WAN
+                updateIcon(ipAddress, true);
+            } else {
+                // Mạng LAN
+                console.log(ipAddress + ' - LAN');
+                // Thực hiện các hành động phù hợp cho mạng LAN
+                updateIcon(ipAddress, false);
+            }
+        };
+        xhr.onerror = function () {
+            // Mạng LAN
+            console.log(ipAddress + ' - LAN');
+            // Thực hiện các hành động phù hợp cho mạng LAN
+            updateIcon(ipAddress, false);
+        };
+        xhr.send();
+    }
 
+    // Hàm cập nhật màu icon dựa trên kết quả kiểm tra mạng
+    function updateIcon(ipAddress, isWAN) {
+        var iconElement = document.querySelector('[data-ip="' + ipAddress + '"]');
+        if (isWAN) {
+            // Mạng WAN - Cập nhật màu icon thành xanh
+            iconElement.style.color = 'green';
+        } else {
+            // Mạng LAN - Cập nhật màu icon thành đen
+            iconElement.style.color = 'black';
+        }
+    }
+
+    // Lặp qua danh sách các IP từ API và gọi hàm kiểm tra mạng cho mỗi IP
+    var rooms = Object.keys(ipData);
+    rooms.forEach(function (room) {
+        ipData[room].forEach(function (data) {
+            checkNetwork(data.ip);
+        });
+    });
+</script>
 </body>
 
 </html>

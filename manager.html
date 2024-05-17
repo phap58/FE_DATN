@@ -5,12 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
     <!-- Css -->
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/2.0.0/css/halfmoon.min.css"
+        integrity="sha512-ypOPhRaCxXLZJC5ZGCgYod2FaAoU5ZGYKbe8h8TUrKnvIRqKDR/pp562Cpmz6LxWNncxor2iXkGjvhwhbkJXRg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+        integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="./dist/styles.css">
     <link rel="stylesheet" href="./dist/all.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
     <title>DATN</title>
-    
 </head>
 
 <body>
@@ -86,9 +96,13 @@
                                     406
                                 </button>
                             </div>
+                            <button id="reportButton"
+                            class="bg-transparent hover:bg-blue-500 text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded room-button">
+                            Báo cáo
+                        </button>
                         </div>
                     
-                        <div class="mb-2 mx-2 border-solid border-gray-300 rounded border shadow-sm w-full md:w-1/2 lg:w-1/2">
+                        <div class="mb-2 mx-2 border-solid border-gray-300 rounded border shadow-sm w-full md:w-1/1 lg:w-1/1">
                             <div class="bg-gray-200 px-2 py-3 border-solid border-gray-300 border-b">
                                 Thông tin chi tiết
                             </div>
@@ -214,11 +228,11 @@
             // Tạo ra các dòng dữ liệu mới dựa trên room được chọn và danh sách IP
             ips.forEach(function(data, index) {
                 var hardwareRow = document.createElement('tr');
-                hardwareRow.innerHTML = '<td>PC</td><td>' + data.ip + '</td><td></td>'+data.os+'<td><canvas id="cpuChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td><td><canvas id="ramChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td><td><canvas id="diskChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td>';
+                hardwareRow.innerHTML = '<td>PC</td><td>' + data.ip + '</td><td>' +data.os+ '</td><td><canvas id="cpuChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td><td><canvas id="ramChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td><td><canvas id="diskChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td>';
                 hardwareTableBody.appendChild(hardwareRow);
 
                 var networkRow = document.createElement('tr');
-                networkRow.innerHTML = '<td>PC</td><td>' + data.ip + '</td><td>'+data.os+'<canvas id="networkChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td>';
+                networkRow.innerHTML = '<td>PC</td><td>' + data.ip + '</td><td>' +data.os+ '</td><td><canvas id="networkChart' + button.innerText + '_' + index + '" width="100" height="100"></canvas></td><td class="border px-4 py-2"><a><i class="fas fa-desktop"></i></a></td>';
                 networkTableBody.appendChild(networkRow);
 
                 // Gọi lại hàm vẽ biểu đồ sau khi thêm dữ liệu mới
@@ -319,6 +333,55 @@
             }
         });
     }
+</script>
+
+<!-- kiểm tra mạng -->
+<script>
+    // Hàm ping từng địa chỉ IP từ API và xác định mạng WAN hoặc LAN
+    function checkNetwork(ipAddress) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.google.com', true);
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Mạng WAN
+                console.log(ipAddress + ' - WAN');
+                // Thực hiện các hành động phù hợp cho mạng WAN
+                updateIcon(ipAddress, true);
+            } else {
+                // Mạng LAN
+                console.log(ipAddress + ' - LAN');
+                // Thực hiện các hành động phù hợp cho mạng LAN
+                updateIcon(ipAddress, false);
+            }
+        };
+        xhr.onerror = function () {
+            // Mạng LAN
+            console.log(ipAddress + ' - LAN');
+            // Thực hiện các hành động phù hợp cho mạng LAN
+            updateIcon(ipAddress, false);
+        };
+        xhr.send();
+    }
+
+    // Hàm cập nhật màu icon dựa trên kết quả kiểm tra mạng
+    function updateIcon(ipAddress, isWAN) {
+        var iconElement = document.querySelector('[data-ip="' + ipAddress + '"]');
+        if (isWAN) {
+            // Mạng WAN - Cập nhật màu icon thành xanh
+            iconElement.style.color = 'green';
+        } else {
+            // Mạng LAN - Cập nhật màu icon thành đen
+            iconElement.style.color = 'black';
+        }
+    }
+
+    // Lặp qua danh sách các IP từ API và gọi hàm kiểm tra mạng cho mỗi IP
+    var rooms = Object.keys(ipData);
+    rooms.forEach(function (room) {
+        ipData[room].forEach(function (data) {
+            checkNetwork(data.ip);
+        });
+    });
 </script>
 </body>
 
