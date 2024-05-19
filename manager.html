@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
         integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="./dist/styles.css">
+        <script src="https://unpkg.com/xlsx@0.16.8/dist/xlsx.full.min.js"></script>
+        <link rel="stylesheet" href="./dist/styles.css">
     <link rel="stylesheet" href="./dist/all.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
     <title>DATN</title>
@@ -102,10 +104,8 @@
                                         406
                                     </button>
                                 </div>
-                                <button id="reportButton"
-                                    class="bg-transparent hover:bg-blue-500 text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded room-button">
-                                    Báo cáo
-                                </button>
+                                <button id="exportButton" class="bg-transparent hover:bg-blue-500 text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded">Export to Excel</button>
+                        
                             </div>
 
                             <div
@@ -179,7 +179,6 @@
                                 </div>
                             </div>
 
-
                         </div>
 
                     </div>
@@ -192,7 +191,9 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="./static/manager.js"></script>
+    <script src="./static/manager.js">
+
+    </script>
 </body>
 
 </html>

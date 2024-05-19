@@ -181,5 +181,9 @@ function attachModalEvents() {
     document.getElementById('sleepButton').addEventListener('click', function () {
         alert('Sleep button clicked');
     });
+
+    document.getElementById('updateButton').addEventListener('click', function () {
+        alert('Update button clicked');
+    });
 }
 
