@@ -213,8 +213,8 @@
             <div id="modalContent"></div>
             <div class="modal-footer">
 <!-- Update the reset button -->
-<button type="button" class="btn btn-secondary resetButton">Reset</button>
-                <button type="button" class="btn btn-primary" id="stopButton">Stop</button>
+<button type="button" class="btn btn-secondary resetButton">Reset</button>          
+      <button type="button" class="btn btn-primary stopButton">Stop</button>
                 <button type="button" class="btn btn-success" id="sleepButton">Sleep</button>
                 <button type="button" class="btn btn-success" id="updateButton">Update</button>
             </div>
@@ -243,16 +243,18 @@ function updateTable() {
         row.classList.add('highlight-row');
 
         row.innerHTML = `
-        <td>${item.name}</td>
-        <td>${item.ip}</td>
-        <td>${item.os}</td>
-        <td>${item.cpu}</td>
-        <td>${item.ram}</td>
-        <td>${item.disk}</td>
-        <td>${item.status}</td>
-        <td class="border px-4 py-2">
-            <button class="openModalBtn"><i class="fas fa-desktop"></i></button>
-        </td>
+        <tr>
+  <td>${item.name}</td>
+  <td>${item.ip}</td>
+  <td>${item.os}</td>
+  <td>${item.cpu}</td>
+  <td>${item.ram}</td>
+  <td>${item.disk}</td>
+  <td>${item.status}</td>
+  <td class="border px-4 py-2">
+    <button class="openModalBtn"><i class="fas fa-desktop"></i></button>
+  </td>
+</tr>
         `;
 
         tableBody.appendChild(row);
@@ -360,7 +362,6 @@ function drawCharts() {
     });
 }
 
-
 function attachModalEvents() {
     const modal = document.getElementById('myModal');
     const closeBtn = document.querySelector('.closeBtn');
@@ -372,14 +373,36 @@ function attachModalEvents() {
             const row = this.closest('tr');
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = `
-        <h2>${row.cells[0].innerText}</h2>
-        <p>IP: ${row.cells[1].innerText}</p>
-        <p>OS: ${row.cells[2].innerText}</p>
-        <p>CPU: ${row.cells[3].innerText}</p>
-        <p>RAM: ${row.cells[4].innerText}</p>
-        <p>Disk: ${row.cells[5].innerText}</p>
-        <p>Status: ${row.cells[6].innerText}</p>
-    `;
+                <h2>${row.cells[0].innerText}</h2>
+                <p>IP: ${row.cells[1].innerText}</p>
+                <p>OS: ${row.cells[2].innerText}</p>
+                <p>CPU: ${row.cells[3].innerText}</p>
+                <p>RAM: ${row.cells[4].innerText}</p>
+                <p>Disk: ${row.cells[5].innerText}</p>
+                <p>Status: ${row.cells[6].innerText}</p>
+            `;
+
+            // Attach event listeners to modal buttons here
+            document.querySelector('.stopButton').addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
+                const ip = row.cells[1].innerText;
+                alert(`IP-adresse for stop-knappen: ${ip}`);
+            });
+
+            document.getElementById('sleepButton').addEventListener('click', function () {
+                alert('Sleep button clicked');
+            });
+
+            document.getElementById('updateButton').addEventListener('click', function () {
+                alert('Update button clicked');
+            });
+
+            // Attach event listener to reset button
+            document.querySelector('.resetButton').addEventListener('click', function (event) {
+                event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
+                const ip = row.cells[1].innerText;
+                alert(`IP-adresse for reset-knappen: ${ip}`);
+            });
         });
     });
 
@@ -391,42 +414,6 @@ function attachModalEvents() {
         if (event.target == modal) {
             modal.style.display = 'none';
         }
-    });
-
-    document.getElementById('stopButton').addEventListener('click', function () {
-        alert('Stop button clicked');
-    });
-
- // Attach event listeners to reset buttons
-document.querySelectorAll('.resetButton').forEach(button => {
-    button.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default form submission
-        
-        // Log the parent elements for debugging
-        console.log("Modal content:", this.closest('.modal-content'));
-        console.log("Modal footer:", this.closest('.modal-footer'));
-        
-        // Traverse up the DOM to find the parent <tr> element
-        const row = this.closest('tr');
-        
-        // Check if the row is found
-        if (row && row.tagName.toLowerCase() === 'tr') {
-            const ip = row.cells[1].innerText;
-            alert(`IP of the reset button clicked: ${ip}`);
-        } else {
-            console.error("Parent <tr> element not found.");
-        }
-    });
-});
-
-
-
-    document.getElementById('sleepButton').addEventListener('click', function () {
-        alert('Sleep button clicked');
-    });
-
-    document.getElementById('updateButton').addEventListener('click', function () {
-        alert('Update button clicked');
     });
 }
 
