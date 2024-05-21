@@ -396,7 +396,7 @@ function attachModalEvents() {
         alert('Stop button clicked');
     });
 
-    document.querySelectorAll('resetButton').forEach(button => {
+    document.querySelectorAll('.resetButton').forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
             const row = this.closest('tr');
