@@ -1,25 +1,131 @@
-     // Sample data for IPs và biểu đồ
-     var ipData = {
-        "404": [
-            { ip: "192.168.1.10", os: "Win 10", cpuData: [10, 20, 30, 40, 50, 20, 30, 10, 40, 35, 15, 25, 50, 10], ramData: [5, 15, 25, 35, 45, 5,10, 11, 20, 12, 35, 5, 11, 22], diskData: [8, 18, 28, 38, 48, 5, 4, 0, 1, 2, 4, 3, 5, 66], networkData: [12, 22, 32, 42, 52, 66, 44, 22, 11, 33, 11, 22, 10, 55] },
-            { ip: "192.168.1.13", os: "Win 11", cpuData: [15, 25, 35, 45, 55, 25, 35, 15, 45, 30, 10, 20, 55, 15], ramData: [8, 18, 28, 38, 48, 8, 13, 14, 22, 15, 38, 8, 13, 25], diskData: [12, 22, 32, 42, 52, 8, 9, 10, 11, 12, 13, 14, 15, 16], networkData: [18, 28, 38, 48, 58, 18, 25, 15, 9, 28, 15, 18, 10, 45] },
-            { ip: "192.168.1.16", os: "Win 7", cpuData: [22, 30, 40, 50, 60, 30, 40, 20, 50, 40, 20, 30, 60, 20], ramData: [10, 20, 30, 40, 50, 10, 18, 20, 28, 30, 35, 10, 18, 30], diskData: [15, 25, 35, 45, 55, 15, 18, 20, 22, 24, 26, 28, 30, 32], networkData: [22, 32, 42, 52, 62, 22, 30, 25, 15, 32, 14, 22, 15, 55] },
-            { ip: "192.168.1.22", os: "Win 7", cpuData: [22, 30, 40, 50, 60, 30, 40, 20, 50, 40, 20, 30, 60, 20], ramData: [10, 20, 30, 40, 50, 10, 18, 20, 28, 30, 35, 10, 18, 30], diskData: [15, 25, 35, 45, 55, 15, 18, 20, 22, 24, 26, 28, 30, 32], networkData: [22, 32, 42, 52, 62, 22, 30, 25, 15, 32, 14, 22, 15, 55] },
-            { ip: "192.168.1.32", os: "Win 7", cpuData: [33, 30, 40, 50, 60, 30, 40, 20, 50, 40, 20, 30, 60, 20], ramData: [10, 20, 30, 40, 50, 10, 18, 20, 28, 30, 35, 10, 18, 30], diskData: [15, 25, 35, 45, 55, 15, 18, 20, 22, 24, 26, 28, 30, 32], networkData: [22, 32, 42, 52, 62, 22, 30, 25, 15, 32, 14, 22, 15, 55] }
+         // Sample data for IPs và biểu đồ
+         var ipData = {
+            "404": [
+                { ip: "192.168.1.10", os: "Win 10", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.13", os: "Win 11", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.16", os: "Win 7", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.22", os: "Win 7", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.32", os: "Win 7", cpuData: [], ramData: [], diskData: [], networkData: [] }
+            ],
+            "405": [
+                { ip: "192.168.1.11", os: "Ubuntu", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.14", os: "Ubuntu", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.17", os: "Ubuntu", cpuData: [], ramData: [], diskData: [], networkData: [] }
+            ],
+            "406": [
+                { ip: "192.168.1.12", os: "Macbook", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.15", os: "Macbook", cpuData: [], ramData: [], diskData: [], networkData: [] },
+                { ip: "192.168.1.18", os: "Macbook", cpuData: [], ramData: [], diskData: [], networkData: [] }
+            ]
+        };
 
-        ],
-        "405": [
-            { ip: "192.168.1.11", os: "Ubuntu", cpuData: [12, 22, 32, 42, 52, 22, 32, 12, 42, 37, 17, 27, 52, 12], ramData: [6, 16, 26, 36, 46, 6, 11, 12, 22, 14, 37, 6, 11, 23], diskData: [9, 19, 29, 39, 49, 6, 5, 1, 2, 3, 5, 4, 6, 67], networkData: [14, 24, 34, 44, 54, 67, 45, 23, 12, 34, 12, 24, 11, 56] },
-            { ip: "192.168.1.14", os: "Ubuntu", cpuData: [18, 28, 38, 48, 58, 28, 38, 18, 48, 38, 18, 28, 58, 18], ramData: [9, 19, 29, 39, 49, 9, 14, 15, 23, 16, 39, 9, 14, 26], diskData: [11, 21, 31, 41, 51, 9, 8, 2, 3, 4, 6, 5, 7, 68], networkData: [16, 26, 36, 46, 56, 68, 46, 24, 13, 36, 13, 26, 12, 57] },
-            { ip: "192.168.1.17", os: "Ubuntu", cpuData: [22, 32, 42, 52, 62, 32, 42, 22, 52, 42, 22, 32, 62, 22], ramData: [9, 19, 29, 39, 49, 9, 16, 18, 26, 29, 44, 9, 16, 30], diskData: [12, 22, 32, 42, 52, 9, 8, 4, 5, 6, 8, 7, 9, 72], networkData: [18, 28, 38, 48, 58, 72, 50, 28, 17, 38, 17, 28, 16, 61] }
-        ],
-        "406": [
-            { ip: "192.168.1.12", os: "Macbook", cpuData: [14, 24, 34, 44, 54, 24, 34, 14, 44, 34, 14, 24, 54, 14], ramData: [7, 17, 27, 37, 47, 7, 12, 13, 21, 17, 40, 7, 12, 24], diskData: [10, 20, 30, 40, 50, 7, 6, 2, 3, 4, 6, 5, 7, 70], networkData: [15, 25, 35, 45, 55, 70, 48, 26, 15, 35, 15, 25, 14, 59] },
-            { ip: "192.168.1.15", os: "Macbook", cpuData: [16, 26, 36, 46, 56, 26, 36, 16, 46, 36, 16, 26, 56, 16], ramData: [8, 18, 28, 38, 48, 8, 15, 16, 24, 18, 41, 8, 15, 28], diskData: [11, 21, 31, 41, 51, 8, 7, 3, 4, 5, 7, 6, 8, 71], networkData: [16, 26, 36, 46, 56, 71, 49, 27, 16, 36, 16, 26, 15, 60] },
-            { ip: "192.168.1.18", os: "Macbook", cpuData: [18, 28, 38, 48, 58, 28, 38, 18, 48, 38, 18, 28, 58, 18], ramData: [9, 19, 29, 39, 49, 9, 16, 18, 26, 29, 44, 9, 16, 30], diskData: [12, 22, 32, 42, 52, 9, 8, 4, 5, 6, 8, 7, 9, 72], networkData: [18, 28, 38, 48, 58, 72, 50, 28, 17, 38, 17, 28, 16, 61] }
-        ]
-    };
-    
+        // Function to draw the chart
+        function drawChart(canvasId, data, chartData, label, color) {
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: Array.from(Array(chartData.length), (_, i) => (i + 1).toString()),
+                    datasets: [{
+                        label: label,
+                        data: chartData,
+                        backgroundColor: 'rgba(' + color.join(',') + ', 0.2)',
+                        borderColor: 'rgba(' + color.join(',') + ', 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    animation: {
+                        animateRotate: true
+                    }
+                }
+            });
+            return chart; // Return the chart object
+        }
+        
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the tbody element of the hardware table
+            var hardwareTableBody = document.getElementById('hardwareTableBody');
+
+            // Get the room buttons
+            var roomButtons = document.querySelectorAll('.room-button');
+
+            // Create an empty array to store chart objects
+            var charts = [];
+
+            // Iterate through each button and add a click event listener
+            roomButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Clear existing rows in the hardware table
+                    hardwareTableBody.innerHTML = '';
+
+                    // Get the list of IPs for the corresponding room
+                    var ips = ipData[button.innerText];
+
+                    // Create new data rows based on the selected room and IP list
+                    ips.forEach(function (data, index) {
+                        var hardwareRow = document.createElement('tr');
+                        hardwareRow.innerHTML = '<td>PC</td><td>' + data.ip + '</td><td>' + data.os + '</td><td><canvas id="cpuChart' + button.innerText + '_' + index + '"></canvas></td><td><canvas id="ramChart' + button.innerText + '_' + index + '"></canvas></td><td><canvas id="diskChart' + button.innerText + '_' + index + '"></canvas></td><td><canvas id="networkChart' + button.innerText + '_' + index + '"></canvas></td>';
+                        hardwareTableBody.appendChild(hardwareRow);
+
+                        // Draw the initial charts and store the chart objects
+                        var cpuChart = drawChart('cpuChart' + button.innerText + '_' + index, data, data.cpuData, 'CPU Usage', [255, 99, 132]);
+                        var ramChart = drawChart('ramChart' + button.innerText + '_' + index, data, data.ramData, 'RAM Usage', [54, 162, 235]);
+                        var diskChart = drawChart('diskChart' + button.innerText + '_' + index, data, data.diskData, 'Disk Usage', [255, 206, 86]);
+                        var networkChart = drawChart('networkChart' + button.innerText + '_' + index, data, data.networkData, 'Network Traffic', [75, 192, 192]);
+                        
+                        charts.push(cpuChart); // Store the CPU chart object in the array
+                        charts.push(ramChart); // Store the RAM chart object in the array
+                        charts.push(diskChart); // Store the Disk chart object in the array
+                        charts.push(networkChart); // Store the Network chart object in the array
+                    });
+
+                    // Start updating the hardware data periodically
+                    setInterval(function () {
+                        // Iterate through each chart object
+                        charts.forEach(function (chart, index) {
+                            // Get the corresponding IP data
+                            var dataIndex = Math.floor(index / 4); // 4 charts per IP
+                            var dataType = index % 4; // 0: CPU, 1: RAM, 2: Disk, 3: Network
+                            var data = ipData[button.innerText][dataIndex];
+
+                            // Choose which data array to update
+                            var chartData;
+                            switch (dataType) {
+                                case 0:
+                                    chartData = data.cpuData;
+                                    break;
+                                case 1:
+                                    chartData = data.ramData;
+                                    break;
+                                case 2:
+                                    chartData = data.diskData;
+                                    break;
+                                case 3:
+                                    chartData = data.networkData;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            // Add a new random value to the data array
+                            chartData.push(Math.floor(Math.random() * 50));
+                            // Remove the oldest value if the array length exceeds 999
+                            if (chartData.length > 90) {
+                                chartData.shift();
+                            }
+                            // Update the chart with the new data
+                            chart.data.labels = Array.from(Array(chartData.length), (_, i) => (i + 1).toString());
+                            chart.data.datasets[0].data = chartData;
+                            chart.update(); // Update the chart
+                        });
+                    }, 800); // Update data every 3 seconds
+                });
+            });
+        });
+   
+
     // Lấy thẻ tbody của bảng phần cứng
     var hardwareTableBody = document.getElementById('hardwareTableBody');
     

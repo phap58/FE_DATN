@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords"
+        content="tailwind,tailwindcss,tailwind css,css,starter template,free template,admin templates, admin template, admin dashboard, free tailwind templates, tailwind example">
+    <!-- Css -->
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/2.0.0/css/halfmoon.min.css"
+        integrity="sha512-ypOPhRaCxXLZJC5ZGCgYod2FaAoU5ZGYKbe8h8TUrKnvIRqKDR/pp562Cpmz6LxWNncxor2iXkGjvhwhbkJXRg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
+        integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="./dist/styles.css">
+    <link rel="stylesheet" href="./dist/all.css">
+    <link rel="stylesheet" href="./dist/form.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i" rel="stylesheet">
+    <title>DATN</title>
+
+</head>
+
+<body>
+    <!--Container -->
+    <div class="mx-auto bg-grey-lightest">
+        <!--Screen-->
+        <div class="min-h-screen flex flex-col">
+            <!--Header Section Starts Here-->
+            <header class="bg-nav">
+                <div class="flex justify-between">
+                    <div class="p-1 mx-3 inline-flex items-center">
+                        <i class="fas fa-bars pr-2 text-white" onclick="sidebarToggle()"></i>
+                        <h1 class="text-white p-2">MENU</h1>
+                    </div>
+
+                </div>
+            </header>
+            <!--/Header-->
+
+            <div class="flex flex-1">
+                   <!--Sidebar-->
+                   <aside id="sidebar"
+                   class="bg-side-nav w-1/2 md:w-1/6 lg:w-1/6 border-r border-side-nav hidden md:block lg:block">
+
+                   <ul class="list-reset flex flex-col">
+                    <li class=" w-full h-full py-3 px-2 border-b border-light-border bg-white">
+                        <a href="scanner.html"
+                            class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                            <i class="fas fa-tachometer-alt float-left mx-2"></i>
+                            SCANNER 
+                            <span><i class="fas fa-angle-right float-right"></i></span>
+                        </a>
+                    </li>   
+                    <li class=" w-full h-full py-3 px-2 border-b border-light-border bg-white">
+                           <a href="details.html"
+                               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                               <i class="fas fa-tachometer-alt float-left mx-2"></i>
+                               DETAILS 
+                               <span><i class="fas fa-angle-right float-right"></i></span>
+                           </a>
+                       </li>
+                 
+                       <li class="w-full h-full py-3 px-2 border-b border-light-border">
+                           <a href="forms.html"
+                               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                               <i class="fab fa-wpforms float-left mx-2"></i>
+                               Forms
+                               <span><i class="fa fa-angle-right float-right"></i></span>
+                           </a>
+                       </li>
+                       <li class="w-full h-full py-3 px-2 border-b border-light-border bg-white">
+                           <a href="manager.html"
+                               class="font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline">
+                               <i class="fab fa-wpforms float-left mx-2"></i>
+                               Manager
+                               <span><i class="fa fa-angle-right float-right"></i></span>
+                           </a>
+                       </li>
+
+                   </ul>
+
+               </aside>
+               <!--/Sidebar-->
+                <!--Main-->
+                <main class="bg-white-500 flex-1 p-3 overflow-hidden">
+                    <!-- MAIN VIEW -->
+                    <div class="container my-5 pt-5">
+                        <div class="col-md-12">
+                            <form hx-trigger="submit" hx-target="#hxResponseTarget">
+                                <div class="row">
+
+                                    <!-- SCANNER CARD -->
+                                    <div class="col-md-9">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                Enter IP or Range
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="input-group w-75 mx-auto">
+                                                    <label for="ipRangeInput"
+                                                        class="input-group-text">Target(s):</label>
+                                                    <input type="text" id="ipRangeInput" name="ip_range"
+                                                        class="form-control" placeholder="Example: 192.168.0.1-100">
+                                                    <button type="submit" class="btn btn-primary"><i
+                                                            class="fas fa-bolt"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="container-fluid pb-2">
+                                                <div class="progress w-100" role="status" aria-label="Loading"
+                                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                    <div class="progress-bar placeholder-wave" id="progressBar"
+                                                        style="width: 0%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- RESULTS CARD -->
+                                    <div class="container">
+                                        <div class="card mt-4">
+                                            <div class="card-header">
+                                                Hardware specifications
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="container">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead class="table-secondary">
+                                                            <tr>
+                                                                <th>Tên máy</th>
+                                                                <th>IP</th>
+                                                                <th>Hệ điều hành</th>
+                                                                <th>CPU</th>
+                                                                <th>RAM</th>
+                                                                <th>Disk</th>
+                                                                <th>Trạng thái</th>
+                                                                <th>Thao tác</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tableBody">
+
+
+                                                            <!-- Thêm dòng thông tin máy tính khác tương tự -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        OS Distribution
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="osChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        RAM Distribution
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="ramChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        WAN Distribution
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <canvas id="wanChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                                </div>
+                </main>
+                <!--/Main-->
+            </div>
+            <!--Footer-->
+
+        </div>
+
+    </div>
+
+    <!-- MODAL -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="closeBtn">&times;</span>
+            <div class="modal-header">
+                <h2>Chi tiết máy tính (Computer Details)</h2>
+            </div>
+            <div id="modalContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+                <button type="button" class="btn btn-primary" id="stopButton">Stop</button>
+                <button type="button" class="btn btn-success" id="sleepButton">Sleep</button>
+                <button type="button" class="btn btn-success" id="updateButton">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script >
+// Giả sử data là một mảng chứa dữ liệu các máy tính
+const data = [
+    { name: "PC1", ip: "192.168.1.10", os: "Windows 10", cpu: "Intel Core i5", ram: "8GB", disk: "256GB SSD", status: "With WAN" },
+    { name: "PC2", ip: "192.168.1.11", os: "Windows 11", cpu: "Intel Core i5", ram: "16GB", disk: "512GB SSD", status: "Without WAN" },
+    { name: "PC3", ip: "192.168.1.12", os: "Ubuntu", cpu: "Intel Core i3", ram: "4GB", disk: "512GB SSD", status: "Without WAN" },
+    { name: "PC4", ip: "192.168.1.13", os: "Ubuntu", cpu: "Intel Core i3", ram: "64GB", disk: "256GB SSD", status: "Without WAN" },
+    { name: "PC5", ip: "192.168.1.14", os: "Mac", cpu: "Intel Core i7", ram: "4GB", disk: "128GB SSD", status: "Without WAN" },
+    { name: "PC6", ip: "192.168.1.15", os: "Mac", cpu: "Intel Core i7", ram: "16GB", disk: "128GB SSD", status: "Without WAN" },
+    // Thêm các dữ liệu máy tính khác tương tự
+];
+
+// Hàm để cập nhật bảng với dữ liệu mới
+function updateTable() {
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = ''; // Xóa nội dung cũ của bảng
+
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.classList.add('highlight-row');
+
+        row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.ip}</td>
+        <td>${item.os}</td>
+        <td>${item.cpu}</td>
+        <td>${item.ram}</td>
+        <td>${item.disk}</td>
+        <td>${item.status}</td>
+        <td class="border px-4 py-2">
+            <button class="openModalBtn"><i class="fas fa-desktop"></i></button>
+        </td>
+        `;
+
+        tableBody.appendChild(row);
+    });
+
+    // Gọi lại hàm để vẽ biểu đồ sau khi bảng được cập nhật
+    drawCharts();
+    attachModalEvents();
+}
+
+// Gọi hàm cập nhật bảng khi trang được tải
+document.addEventListener('DOMContentLoaded', function () {
+    updateTable();
+});
+
+// Hàm để vẽ biểu đồ
+function drawCharts() {
+    // Lấy dữ liệu từ bảng và tính toán phân phối OS
+    const osData = {};
+    const ramData = {};
+    let wanWith = 0;
+    let wanWithout = 0;
+
+    document.querySelectorAll('#tableBody tr').forEach(row => {
+        const os = row.cells[2].innerText;
+        const ram = row.cells[4].innerText;
+        const status = row.cells[6].innerText;
+        if (!osData[os]) osData[os] = 0;
+        osData[os]++;
+        if (!ramData[ram]) ramData[ram] = 0;
+        ramData[ram]++;
+        if (status === 'With WAN') {
+            wanWith++;
+        } else if (status === 'Without WAN') {
+            wanWithout++;
+        }
+    });
+
+    // Tạo biểu đồ OS Distribution
+    const osLabels = Object.keys(osData);
+    const osCounts = Object.values(osData);
+    const osChartCtx = document.getElementById('osChart').getContext('2d');
+    const osChart = new Chart(osChartCtx, {
+        type: 'doughnut',
+        data: {
+            labels: osLabels,
+            datasets: [{
+                data: osCounts,
+                backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Tạo biểu đồ RAM Distribution
+    const ramLabels = Object.keys(ramData);
+    const ramCounts = Object.values(ramData);
+    const ramChartCtx = document.getElementById('ramChart').getContext('2d');
+    const ramChart = new Chart(ramChartCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ramLabels,
+            datasets: [{
+                data: ramCounts,
+                backgroundColor: ['#cc1f1a', '#ff6384', '#36a2eb', '#ffce56']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Tạo biểu đồ WAN Distribution
+    const wanTotal = wanWith + wanWithout;
+    const wanWithPercentage = (wanWith / wanTotal) * 100;
+    const wanWithoutPercentage = (wanWithout / wanTotal) * 100;
+    const wanChartCtx = document.getElementById('wanChart').getContext('2d');
+    const wanChart = new Chart(wanChartCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['With WAN', 'Without WAN'],
+            datasets: [{
+                data: [wanWithPercentage, wanWithoutPercentage],
+                backgroundColor: ['#36a2eb', '#ff6384']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+
+    // Cập nhật biểu tượng thao tác tùy theo trạng thái
+    document.querySelectorAll('#tableBody tr').forEach(row => {
+        const statusCell = row.cells[6];
+        const actionCell = row.cells[7];
+        const status = statusCell.innerText;
+        actionCell.innerHTML = status === 'With WAN' ?
+            `<button class="openModalBtn bg-teal-300 cursor-pointer rounded p-1 mx-1 text-white"><i class="fas fa-desktop"></i></button>` :
+            `<button class="openModalBtn"><i class="fas fa-desktop"></i></button>`;
+    });
+}
+
+
+function attachModalEvents() {
+    const modal = document.getElementById('myModal');
+    const closeBtn = document.querySelector('.closeBtn');
+
+    document.querySelectorAll('.openModalBtn').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
+            modal.style.display = 'block';
+            const row = this.closest('tr');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+        <h2>${row.cells[0].innerText}</h2>
+        <p>IP: ${row.cells[1].innerText}</p>
+        <p>OS: ${row.cells[2].innerText}</p>
+        <p>CPU: ${row.cells[3].innerText}</p>
+        <p>RAM: ${row.cells[4].innerText}</p>
+        <p>Disk: ${row.cells[5].innerText}</p>
+        <p>Status: ${row.cells[6].innerText}</p>
+    `;
+        });
+    });
+
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function () {
+        alert('Stop button clicked');
+    });
+
+    document.querySelectorAll('resetButton').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
+            const row = this.closest('tr');
+            const ip = row.cells[1].innerText;
+
+            alert(`IP of the reset button clicked: ${ip}`);
+
+          
+        });
+    });
+
+
+
+    document.getElementById('sleepButton').addEventListener('click', function () {
+        alert('Sleep button clicked');
+    });
+
+    document.getElementById('updateButton').addEventListener('click', function () {
+        alert('Update button clicked');
+    });
+}
+
+</script>
+
+</body>
+
+</html>
