@@ -212,7 +212,8 @@
             </div>
             <div id="modalContent"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+<!-- Update the reset button -->
+<button type="button" class="btn btn-secondary resetButton">Reset</button>
                 <button type="button" class="btn btn-primary" id="stopButton">Stop</button>
                 <button type="button" class="btn btn-success" id="sleepButton">Sleep</button>
                 <button type="button" class="btn btn-success" id="updateButton">Update</button>
@@ -396,17 +397,27 @@ function attachModalEvents() {
         alert('Stop button clicked');
     });
 
-    document.querySelectorAll('.resetButton').forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của nút
-            const row = this.closest('tr');
+ // Attach event listeners to reset buttons
+document.querySelectorAll('.resetButton').forEach(button => {
+    button.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+        
+        // Log the parent elements for debugging
+        console.log("Modal content:", this.closest('.modal-content'));
+        console.log("Modal footer:", this.closest('.modal-footer'));
+        
+        // Traverse up the DOM to find the parent <tr> element
+        const row = this.closest('tr');
+        
+        // Check if the row is found
+        if (row && row.tagName.toLowerCase() === 'tr') {
             const ip = row.cells[1].innerText;
-
             alert(`IP of the reset button clicked: ${ip}`);
-
-          
-        });
+        } else {
+            console.error("Parent <tr> element not found.");
+        }
     });
+});
 
 
 
